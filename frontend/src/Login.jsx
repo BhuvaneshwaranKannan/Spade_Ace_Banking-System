@@ -76,7 +76,7 @@ function Login() {
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="userId" className="form-label fw-semibold form-label-custom">User ID / Phone Number</label>
+                  <label htmlFor="userId" className="form-label fw-semibold form-label-custom">ID / Phone Number</label>
                   <input type="tel" inputMode="numeric" pattern="[0-9+\s-]+" className="form-control custom-input" id="userId" placeholder="Enter your User ID / Phone Number" value={id} onChange={(e) => setId(e.target.value)} required />
                   <div className="text-end mt-1">
                     <a href="#" className="form-link">Unlock User ID?</a>
