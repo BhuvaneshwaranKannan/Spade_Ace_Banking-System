@@ -4,18 +4,11 @@ import RegisterTerms from "./RegisterTerms"
 function Register() {
     return (
         <>
-
             <Navbar />
 
-
             <div>
-
-                
                 <RegisterTerms />
-
             </div>
-
-
 
             <div className="reg-footer">
                 <div className="reg-footer-text my-3">

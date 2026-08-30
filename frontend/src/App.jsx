@@ -4,12 +4,16 @@ import './App.css'
 import Login from './Login.jsx'
 import Register from './Register.jsx';
 import Home from './Home.jsx';
+import Deposit from './Deposit.jsx';
+import Withdraw from './Withdraw.jsx';
+import Balance from './Balance.jsx';
+import Settings from './Loading.jsx';
 
 function App() {
 
   const router = createBrowserRouter([
     {
-      path: '/login',
+      path: '/',
       element: <Login />
     },
     {
@@ -17,8 +21,24 @@ function App() {
       element: <Register />
     },
     {
-      path: '/',
+      path: '/home',
       element: <Home />
+    },
+    {
+      path: '/deposit',
+      element: <Deposit />
+    },
+    {
+      path: '/withdraw',
+      element: <Withdraw />
+    },
+    {
+      path: '/balance',
+      element: <Balance />
+    },
+    {
+      path: '/settings',
+      element: <Settings />
     }
   ]);
 
@@ -30,5 +50,7 @@ function App() {
 }
 
 // npm install react-router-dom --> to use router provider
+
+//Stop-Process -Id (Get-NetTCPConnection -LocalPort 8080).OwningProcess -Force
 
 export default App
