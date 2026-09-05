@@ -9,7 +9,7 @@ import Withdraw from './Withdraw.jsx';
 import Balance from './Balance.jsx';
 import Loading from './Loading.jsx';
 import ErrorPage from './ErrorPage.jsx';
-import Beast from './Beast.jsx';
+import FundTransfer from './FundTransfer.jsx';
 
 function App() {
 
@@ -45,10 +45,10 @@ function App() {
     {
       path: '/errorPage',
       element: <ErrorPage />
-    },,
+    },
     {
-      path: '/beast',
-      element: <Beast />
+      path: '/fundtransfer',
+      element: <FundTransfer />
     }
 
   ]);

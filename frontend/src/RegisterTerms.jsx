@@ -19,6 +19,9 @@ function RegisterTerms() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [phoneVerified, setPhoneVerified] = useState(false);
+  const [otpG, setOtpG] = useState("");
+
+  const [geneOtp, setgeneOtp] = useState(false);
 
   const [errorUid, setErrorUid] = useState(false);
   const [errorPass, setErrorPass] = useState(false);
@@ -35,9 +38,18 @@ function RegisterTerms() {
 
     const verificationTimer = setTimeout(() => {
       setPhoneVerified(true);
-    }, 2000);
+      setgeneOtp(true);
+      otpTimer = setTimeout(() => {
+        setOtpG(Math.floor(100000 + Math.random() * 900000).toString());
+        setgeneOtp(false);
+      }, 1500);
+    }, 1500);
 
-    return () => clearTimeout(verificationTimer);
+    let otpTimer;
+    return () => {
+      clearTimeout(verificationTimer);
+      clearTimeout(otpTimer);
+    };
   }, [phoneNumber, errorPhn]);
 
   const handleSubmit = (e) => {
@@ -50,7 +62,7 @@ function RegisterTerms() {
       setErrorPass(true);
       return;
     }
-    if (otp.trim() !== "696969") {
+    if (otp.trim() !== otpG) {
       setErrorOtp(true);
       return;
     }
@@ -144,7 +156,7 @@ function RegisterTerms() {
                       <div className="mb-3">
                         <label htmlFor="captcha" className="form-label fw-semibold form-label-custom">Enter Phone number</label>
                         <div className="d-flex gap-2 align-items-center">
-                          <input type="tel" inputMode="numeric" className="form-control custom-input" id="phoneNumber" placeholder="10-digit phone number" value={phoneNumber} onChange={(e) => { setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10)); setPhoneVerified(false); setErrorPhn(false) }} required />
+                          <input type="tel" inputMode="numeric" className="form-control custom-input" id="phoneNumber" placeholder="10-digit phone number" value={phoneNumber} onChange={(e) => { setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10)); setPhoneVerified(false); setgeneOtp(false); setOtpG(""); setErrorPhn(false) }} required />
                           <div className="verify-box">
                             {
                               !errorPhn && phoneNumber.length === 10 && phoneVerified ? (<>
@@ -185,11 +197,13 @@ function RegisterTerms() {
                           <div className="captcha-box">
 
                             {
-                                !errorPhn && phoneNumber.length === 10 && phoneVerified ? (<>
-                                  696969
-                                </>) : (<>
-                                </>)
-                              }
+                              phoneVerified && geneOtp ?(<>
+                                <i className="bi bi-arrow-repeat verify-spinner" aria-label=""></i>
+                              </>) : phoneVerified ?(<>
+                                <span>{otpG}</span>
+                              </>) : (<>
+                              </>)
+                            }
 
                           </div>
                         </div>

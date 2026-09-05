@@ -3,7 +3,6 @@ import banklogo from './assets/bank-logo.png'
 import { useNavigate } from 'react-router-dom'
 import { IconButton, Badge } from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
-import Beast from './Beast.jsx';
 
 function Navbar(props) {
     const navigate = useNavigate();

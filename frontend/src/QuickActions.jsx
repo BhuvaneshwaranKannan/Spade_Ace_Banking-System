@@ -14,7 +14,7 @@ function QuickActions() {
             <i className="main-icon bi bi-wallet2"></i>
             <span>Check Balance</span>
           </button>
-          <button className="icon-container" type="button">
+          <button className="icon-container" type="button" onClick={() => navigate('/fundtransfer')}>
             <i className="main-icon bi bi-send"></i>
             <span>Fund Transfer</span>
           </button>
