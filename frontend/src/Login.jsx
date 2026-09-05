@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import { Atom } from 'react-loading-indicators';
+import ErrorPage from './ErrorPage.jsx'
 
 
 function Login() {
@@ -39,12 +40,15 @@ function Login() {
         localStorage.setItem("token", response.data.token);
         setTimeout(() => {
           navigate('/home');
-        }, 4000);
+        }, 2000);
 
       })
       .catch(error => {
         console.error("Login failed", error);
-        alert(error.response?.data || "Unable to log in. Check your User ID and password.");
+        setloading(false);
+        // alert(error.response?.data || "Unable to log in. Check your User ID and password...");
+        <ErrorPage errormsg = "Unable to log in. Check your User ID and password..." />
+        navigate('/errorPage')
       })
       .finally(() => {
         setIsSubmitting(false);
@@ -76,7 +80,7 @@ function Login() {
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="userId" className="form-label fw-semibold form-label-custom">ID / Phone Number</label>
+                  <label htmlFor="userId" className="form-label fw-semibold form-label-custom">User ID / Phone Number</label>
                   <input type="tel" inputMode="numeric" pattern="[0-9+\s-]+" className="form-control custom-input" id="userId" placeholder="Enter your User ID / Phone Number" value={id} onChange={(e) => setId(e.target.value)} required />
                   <div className="text-end mt-1">
                     <a href="#" className="form-link">Unlock User ID?</a>

@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import { Atom } from 'react-loading-indicators';
 
 import axios from "axios";
+import ErrorPage from "./ErrorPage";
+
+import Navbar from "./Navbar"
 
 function RegisterTerms() {
   const navigate = useNavigate();
@@ -15,6 +18,7 @@ function RegisterTerms() {
   const [repassword, setRepassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
+  const [phoneVerified, setPhoneVerified] = useState(false);
 
   const [errorUid, setErrorUid] = useState(false);
   const [errorPass, setErrorPass] = useState(false);
@@ -22,6 +26,19 @@ function RegisterTerms() {
   const [errorPhn, setErrorPhn] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState('');
+
+  useEffect(() => {
+    if (errorPhn || phoneNumber.length !== 10) {
+      return undefined;
+    }
+
+    const verificationTimer = setTimeout(() => {
+      setPhoneVerified(true);
+    }, 2000);
+
+    return () => clearTimeout(verificationTimer);
+  }, [phoneNumber, errorPhn]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,13 +69,14 @@ function RegisterTerms() {
       .catch(error => {
         console.error("Error registering", error);
         setLoading(false);
-        alert(error.response?.data || "Unable to register. Please try again.");
+        setApiError(error.response?.data || 'Unable to register. Please try again.');
       });
 
   };
 
-
-
+  if (apiError) {
+    return <ErrorPage errormsg={apiError} />;
+  }
 
   return (
     <>
@@ -71,6 +89,8 @@ function RegisterTerms() {
             </div>
           </div>
         </>) : (<>
+
+          <Navbar />
 
           <div className="reg-terms-bg">
             {
@@ -124,12 +144,14 @@ function RegisterTerms() {
                       <div className="mb-3">
                         <label htmlFor="captcha" className="form-label fw-semibold form-label-custom">Enter Phone number</label>
                         <div className="d-flex gap-2 align-items-center">
-                          <input type="tel" inputMode="numeric" className="form-control custom-input" id="phoneNumber" placeholder="10-digit phone number" value={phoneNumber} onChange={(e) => { setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10)); setErrorPhn(false) }} required />
+                          <input type="tel" inputMode="numeric" className="form-control custom-input" id="phoneNumber" placeholder="10-digit phone number" value={phoneNumber} onChange={(e) => { setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10)); setPhoneVerified(false); setErrorPhn(false) }} required />
                           <div className="verify-box">
                             {
-                              !errorPhn && phoneNumber.length === 10 ? (<>
-                                <i class="bi bi-check2-circle"></i>
-                                Verified
+                              !errorPhn && phoneNumber.length === 10 && phoneVerified ? (<>
+                                <i className="bi bi-check2-circle"></i>
+                                <span>Verified</span>
+                              </>) : !errorPhn && phoneNumber.length === 10 ? (<>
+                                <i className="bi bi-arrow-repeat verify-spinner" aria-label="Verifying phone number"></i>
                               </>) : (<>
                               </>)
                             }
@@ -142,6 +164,14 @@ function RegisterTerms() {
                               <i class="bi bi-x-octagon mx-2"></i>
                               Phone number is not valid!
                             </>) : (<>
+                              {
+                                !errorPhn && phoneNumber.length === 10 && phoneVerified ? (<>
+                                  Otp is sent to your mobile number!
+
+                                </>) : (<> 
+
+                                </>)
+                              }
                             </>)
                           }
 
@@ -153,7 +183,14 @@ function RegisterTerms() {
                         <div className="d-flex gap-2 align-items-center">
                           <input type="text" className="form-control custom-input" id="captcha" placeholder="OTP" value={otp} onChange={(e) => { setOtp(e.target.value); setErrorOtp(false) }} required />
                           <div className="captcha-box">
-                            696969
+
+                            {
+                                !errorPhn && phoneNumber.length === 10 && phoneVerified ? (<>
+                                  696969
+                                </>) : (<>
+                                </>)
+                              }
+
                           </div>
                         </div>
                         <div className="text-end mt-1">
@@ -171,7 +208,7 @@ function RegisterTerms() {
                       <button
                         type="submit"
                         className="btn w-100 mb-2 fw-bold custom-btn-primary"
-                        
+
                       >Register
                       </button>
                       <button
@@ -942,13 +979,28 @@ function RegisterTerms() {
 
                     <div className="reg-terms-buttons d-flex flex-row gap-3 mx-4 my-4">
                       <button type="button" class="btn btn-success" onClick={() => setAgree(true)}>I Agree</button>
-                      <button type="button" class="btn btn-danger" onClick={() => navigate('/login')}>I Disagree</button>
+                      <button type="button" class="btn btn-danger" onClick={() => navigate('/')}>I Disagree</button>
                     </div>
 
                   </div>
                 </div>
               )
             }
+
+            <div className="reg-footer">
+              <div className="reg-footer-text my-3">
+
+                © 2026 Spade Ace Bank Ltd. All Rights Reserved.
+                |
+                <a href="">
+                  Security Information
+                </a>
+                |
+                <a href="">
+                  Terms and Conditions
+                </a>
+              </div>
+            </div>
 
           </div>
 

@@ -279,7 +279,7 @@ body {
 .reg-terms-bg2 {
   width: 100%;
   height: 91vh;
-  background-image: url("./assets/reg-bg.jpg");
+  /* background-image: url("./assets/reg-bg.jpg"); */
   background-size: 100%;
   background-position: top center;
   background-repeat: no-repeat;
@@ -901,7 +901,7 @@ body {
   transition: color 0.2s ease;
 }
 
-.deposit-method-box-true .d-method-icon i{
+.deposit-method-box-true .d-method-icon i {
   color: var(--accent-color);
 }
 
@@ -1075,10 +1075,10 @@ body {
 .b-toggler {
   width: 150px;
   height: 40px;
-  background-color: #1f1f1f;
+  /* background-color: #1f1f1f; */
   border: 1px solid var(--accent-lighter);
   border-radius: 5px;
-  color: white;
+  color: black;
   cursor: pointer;
 
   display: flex;
@@ -1108,12 +1108,12 @@ body {
 
 .b-toggle-icon {
   margin-left: 10px;
-  color: white;
+  color: black;
 }
 
 .b-hide-balance {
   margin-right: 10px;
-  color: white;
+  color: black;
 }
 
 .b-title {
@@ -1146,6 +1146,7 @@ body {
 
 .b-as:hover {
   cursor: pointer;
+  border: 3px solid orangered;
 }
 
 .b-acc-summary-title {
@@ -1159,7 +1160,7 @@ body {
 .b-as:hover .b-as-td-title,
 .b-as:hover .b-as-tw-title,
 .b-as:hover .b-as-tt-title {
-  color: grey;
+  color: orangered;
 }
 
 .b-as-td-icon {
@@ -1270,6 +1271,18 @@ body {
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+.verify-spinner {
+  animation: verify-spin 1s linear infinite;
+  color: #cc3131;
+  font-size: 1.2rem;
+}
+
+@keyframes verify-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Dark Mode Overrides for Components */
 [data-bs-theme="dark"] .home-container-header {
   color: var(--accent-light);
@@ -1306,6 +1319,10 @@ body {
 
 [data-bs-theme="dark"] .b-as {
   border-color: var(--accent-light);
+}
+
+[data-bs-theme="dark"] .b-hide-balance {
+  color: white;
 }
 
 [data-bs-theme="dark"] .home-container {
@@ -1376,4 +1393,19 @@ body {
   justify-content: center;
   gap: 15px;
   padding: 20px;
+}
+
+.errr {
+  width: 100vw;
+  height: 100vh;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #e81d1d;
+}
+
+.err-icon {
+  font-size: 1rem;
 }

@@ -58,8 +58,7 @@ function Sidebar() {
                         </div>
 
                         <div className="p-2 navi">
-                            <i className='bi-grid-fill'></i>
-                            Also from SAB
+                            <i className="sideIcon bi bi-grid-fill"></i>Also from SAB
                         </div>
                     </div>
 

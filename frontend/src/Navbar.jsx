@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import banklogo from './assets/bank-logo.png'
 import { useNavigate } from 'react-router-dom'
-
+import { IconButton, Badge } from '@mui/material';
+import MailIcon from '@mui/icons-material/Mail';
+import Beast from './Beast.jsx';
 
 function Navbar(props) {
     const navigate = useNavigate();
@@ -29,7 +31,7 @@ function Navbar(props) {
                         props.usage === 'home' ? (
                             <div className="dropdown">
                                 <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="bi bi-person-circle profile-icon mx-2"></i>
+                                    <i className="bi bi-person-circle profile-icon mx-2"></i>
                                     Profile
                                 </button>
                                 <ul className="dropdown-menu">
@@ -60,6 +62,25 @@ function Navbar(props) {
                         {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
                     </button>
 
+                    {props.usage === 'home' ? (<>
+                        <IconButton aria-label="show 99 unread messages"
+                        sx={{
+                            color: 'orangered',
+                            '& .MuiSvgIcon-root': {
+                                color: '#ff8800',
+                            },
+                            '&:hover': {
+                                backgroundColor: 'rgba(165, 161, 161, 0.37)',
+                            },
+                        }}
+                    >
+                        <Badge color="" badgeContent={0} showZero>
+                            <MailIcon />
+                        </Badge>
+                    </IconButton>
+                    </>) : (<>
+
+                    </>)}
 
                 </div>
 

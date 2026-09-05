@@ -7,7 +7,9 @@ import Home from './Home.jsx';
 import Deposit from './Deposit.jsx';
 import Withdraw from './Withdraw.jsx';
 import Balance from './Balance.jsx';
-import Settings from './Loading.jsx';
+import Loading from './Loading.jsx';
+import ErrorPage from './ErrorPage.jsx';
+import Beast from './Beast.jsx';
 
 function App() {
 
@@ -38,8 +40,17 @@ function App() {
     },
     {
       path: '/settings',
-      element: <Settings />
+      element: <Loading />
+    },
+    {
+      path: '/errorPage',
+      element: <ErrorPage />
+    },,
+    {
+      path: '/beast',
+      element: <Beast />
     }
+
   ]);
 
   return (

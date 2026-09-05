@@ -13,6 +13,7 @@ function Home() {
   return (
     <>
       <Navbar usage="home" />
+
       <div>
         <MarketTicker />
       </div>
