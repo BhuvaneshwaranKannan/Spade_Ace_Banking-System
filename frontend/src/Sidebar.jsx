@@ -12,7 +12,7 @@ function Sidebar() {
 
                     <div className="d-flex flex-column gap-1">
 
-                        <div className="p-2 navi" onClick={() => navigate('/')}>
+                        <div className="p-2 navi" onClick={() => navigate('/home')}>
                             <i className="sideIcon bi bi-house-door-fill"></i>Home
                         </div>
 

@@ -178,7 +178,7 @@ function RegisterTerms() {
                             </>) : (<>
                               {
                                 !errorPhn && phoneNumber.length === 10 && phoneVerified ? (<>
-                                  Otp is sent to your mobile number!
+                                  Otp is sent !!
 
                                 </>) : (<> 
 

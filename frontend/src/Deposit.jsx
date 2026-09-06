@@ -142,7 +142,7 @@ function Deposit() {
                     Deposit Amount
                 </div>
 
-                <div className="input-group mb-1">
+                <div className="input-group mb-1 mx-4">
                     <span className="input-group-text">$</span>
                     <input type="number" className="form-control" aria-label="Amount (to the nearest dollar)" value={amount} onChange={(e) => setAmount(e.target.value)} />
                     <span className="input-group-text">.00</span>

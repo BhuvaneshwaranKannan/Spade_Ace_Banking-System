@@ -49,7 +49,7 @@ function ErrorPage(props) {
       <div className='errr'>
         <div className='err-icon'>
         <SentimentVeryDissatisfiedOutlinedIcon />
-        Hemu
+        
         </div>
         {props.errormsg}
       </div>
