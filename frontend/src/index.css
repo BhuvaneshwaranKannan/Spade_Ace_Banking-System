@@ -786,8 +786,8 @@ body {
   box-shadow: 0px 2px 15px var(--accent-light);
 }
 
-.ft-ts {
-  height: 790px;
+.d-s {
+  height: 530px;
 }
 
 .d-cont1-title {
@@ -853,10 +853,20 @@ body {
 .ft-ts-amount {
   font-size: 3rem;
   letter-spacing: 0.1rem;
+  color: green;
+  font-weight: 600;
+}
+
+.d-success {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.d-s-ub {
+  font-size: larger;
+  color: grey;
 }
 
 
@@ -1032,7 +1042,7 @@ body {
 
 .deposit-container2 {
   width: calc(100% - 700px);
-  height: 550px;
+  height: 580px;
   background-color: var(--bg-secondary);
   margin-left: 250px;
   box-sizing: border-box;
@@ -1145,6 +1155,15 @@ body {
   justify-content: flex-end;
   align-items: center;
   gap: 20px;
+}
+
+.d-error-msg {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+  color: red;
 }
 
 .deposit-buttons button {
