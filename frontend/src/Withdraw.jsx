@@ -15,6 +15,10 @@ function Withdraw() {
   const [amount, setAmount] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const [ws, setWs] = useState(false);
+
+  const [withdrawedAmount, setWithdrawedAmount] = useState(0);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -42,11 +46,13 @@ function Withdraw() {
     const token = localStorage.getItem("token");
     const withdrawAmount = parseInt(amount);
     if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
-      alert("Please enter a valid amount");
+      // alert("Please enter a valid amount");
+      setError("!! Please enter a valid amount !!");
       return;
     }
     if (withdrawAmount > balance) {
-      alert("Insufficient balance");
+      // alert("Insufficient balance");
+      setError("!! Insufficient balance !!");
       return;
     }
 
@@ -54,14 +60,16 @@ function Withdraw() {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
-        alert("Withdrawal successful!");
         setBalance(response.data.balance);
         setAmount("");
-        navigate('/home');
+        setWithdrawedAmount(withdrawAmount);
+        setWs(true);
       })
       .catch(error => {
         console.error("Withdrawal failed", error);
-        alert("Withdrawal failed");
+        setError("Withdraw failed! Login the app to continue.");
+        alert("Session Expired. Login again!!");
+        navigate('/');
       });
   };
 
@@ -71,8 +79,8 @@ function Withdraw() {
     <>
       {
         loading ? (
-          <div className='loading-effect'>  
-              <Atom color="#df7000" size="large" text="" textColor="" />
+          <div className='loading-effect'>
+            <Atom color="#df7000" size="large" text="" textColor="" />
           </div>
         ) : (
           <></>
@@ -84,131 +92,211 @@ function Withdraw() {
         <Sidebar />
       </div>
 
-      <div className='locator'>
-        <span className='go-back mx-1' onClick={() => navigate('/home')}>Home</span>
-        <span className='mx-1'><i className="bi bi-chevron-right"></i></span>
-        <span className='on-loc mx-1'>Withdraw</span>
+      {
+        ws ? (<>
+          <div className='locator'>
+            <span className='go-back mx-1' onClick={() => navigate('/home')}>Home</span>
+            <span className='mx-1'><i className="bi bi-chevron-right"></i></span>
+            <span className='go-back mx-1' onClick={() => setWs(false)}>Withdraw</span>
+            <span className='mx-1'><i className="bi bi-chevron-right"></i></span>
+            <span className='on-loc-final mx-1'>Withdraw Successful</span>
 
-        <div className="w-title">
-          <div>
-            <div className="deposit-title mt-2">
-              Withdraw Money
-            </div>
-            <div className="deposit-title-sub">
-              Withdraw Money to your Bank Account
-            </div>
-          </div>
-          <div className='d-title-icon mx-5'>
-            <img src={wWallet} alt="" />
-          </div>
-        </div>
-      </div>
-
-      <div className="deposit-container1 mt-4">
-        <div className="d-cont1-title">
-          Select Account
-        </div>
-
-        <div className="d-cont1-contentbox">
-
-          <div className="dc1-c1">
-            <i className="bi bi-wallet2"></i>
-          </div>
-
-          <div className="dc1-c2 d-flex flex-column justify-content-center">
-            <div>
-              Savings Account
-            </div>
-            <div>
-              **** 6969
+            <div className="w-title">
+              <div>
+                <div className="deposit-title mt-2">
+                  Withdraw Money
+                </div>
+                <div className="deposit-title-sub">
+                  Withdraw Money to your Bank Account
+                </div>
+              </div>
+              <div className='d-title-icon mx-5'>
+                <img src={wWallet} alt="" />
+              </div>
             </div>
           </div>
 
-          <div className="dc1-c3">
-            <div>
-              ${balance}
+          <div className="ft-container1 d-s mt-4">
+            <div className='ft-ts-headerCont'>
+
+              <div className='ft-ts-icon'>
+                <i class="bi bi-check2-circle"></i>
+              </div>
+
+              <div className='ft-ts-header'>
+                Withdraw Successful
+              </div>
+
+              <div className='ft-ts-content'>
+                <span className='ft-ts-content-amount'>-${withdrawedAmount}</span> has been withdrawn from your bank account.
+              </div>
+
             </div>
-            <div>
-              Available Balance
+
+            <div className="ft-ts-divider my-3"></div>
+
+            <div className="d-success">
+              <div className='d-s-ub mt-4'>
+                Updated balance
+              </div>
+              <div className='ft-ts-amount'>
+                ${balance}
+              </div>
+            </div>
+
+
+            <div className="ft-buttons mx-5 mt-4">
+              <button className="ft-b-items" onClick={() => { }}>
+                <i class="bi bi-file-earmark-ruled"></i>
+                <span>View Transaction </span>
+              </button>
+              <button className="ft-b-items" onClick={() => { navigate('/home') }}>
+                <i class="bi bi-house-door-fill"></i>
+                <span>Back to Home</span>
+              </button>
             </div>
           </div>
+        </>) : (<>
+          <div>
 
-          <div className="dc1-c4">
-            <i className="bi bi-chevron-down"></i>
-          </div>
-        </div>
+            <div className='locator'>
+              <span className='go-back mx-1' onClick={() => navigate('/home')}>Home</span>
+              <span className='mx-1'><i className="bi bi-chevron-right"></i></span>
+              <span className='on-loc mx-1'>Withdraw</span>
 
-      </div>
-
-      <div className="withdraw-container2 mt-4">
-
-        <div className="d-cont1-title">
-          Withdraw Amount
-        </div>
-
-        <div className="input-group mb-1 mx-3">
-          <span className="input-group-text">$</span>
-          <input type="number" className="form-control" aria-label="Amount (to the nearest dollar)" value={amount} onChange={(e) => setAmount(e.target.value)} />
-          <span className="input-group-text">.00</span>
-        </div>
-
-        <div className="below-ig mx-3 mb-2">
-          Enter amount to withdraw
-        </div>
-
-        <div className="d-cont1-title">
-          Quick Amount
-        </div>
-
-        <div className="quick-amount mx-5">
-          {[1, 100, 500, 1000, 5000, 10000].map(val => (
-            <div key={val} className="quick-amount-box text-center" onClick={() => setAmount(val.toString())} style={{ cursor: 'pointer' }}>
-              <div className="my-2">${val}</div>
+              <div className="w-title">
+                <div>
+                  <div className="deposit-title mt-2">
+                    Withdraw Money
+                  </div>
+                  <div className="deposit-title-sub">
+                    Withdraw Money to your Bank Account
+                  </div>
+                </div>
+                <div className='d-title-icon mx-5'>
+                  <img src={wWallet} alt="" />
+                </div>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
 
-      <div className="withdraw-container3 mt-4">
+            <div className="deposit-container1 mt-4">
+              <div className="d-cont1-title">
+                Select Account
+              </div>
 
-        <div className="d-cont1-title">
-          Transaction Summary
-        </div>
+              <div className="d-cont1-contentbox">
 
-        <div className="trans-sum mx-3 my-3">
-          <div>
-            Available Balance
+                <div className="dc1-c1">
+                  <i className="bi bi-wallet2"></i>
+                </div>
+
+                <div className="dc1-c2 d-flex flex-column justify-content-center">
+                  <div>
+                    Savings Account
+                  </div>
+                  <div>
+                    **** 6969
+                  </div>
+                </div>
+
+                <div className="dc1-c3">
+                  <div>
+                    ${balance}
+                  </div>
+                  <div>
+                    Available Balance
+                  </div>
+                </div>
+
+                <div className="dc1-c4">
+                  <i className="bi bi-chevron-down"></i>
+                </div>
+              </div>
+
+            </div>
+
+            <div className="withdraw-container2 mt-4">
+
+              <div className="d-cont1-title">
+                Withdraw Amount
+              </div>
+
+              <div className="input-group mb-1 mx-3">
+                <span className="input-group-text">$</span>
+                <input type="number" className="form-control" aria-label="Amount (to the nearest dollar)" value={amount} onChange={(e) => setAmount(e.target.value)} />
+                <span className="input-group-text">.00</span>
+              </div>
+
+              <div className="below-ig mx-3 mb-2">
+                Enter amount to withdraw
+              </div>
+
+              <div className="d-cont1-title">
+                Quick Amount
+              </div>
+
+              <div className="quick-amount mx-5">
+                {[1, 100, 500, 1000, 5000, 10000].map(val => (
+                  <div key={val} className="quick-amount-box text-center" onClick={() => {setAmount(val.toString()); setError("");}} style={{ cursor: 'pointer' }}>
+                    <div className="my-2">${val}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="withdraw-container3 mt-4">
+
+              <div className="d-cont1-title">
+                Transaction Summary
+              </div>
+
+              <div className="trans-sum mx-3 my-3">
+                <div>
+                  Available Balance
+                </div>
+                <div>
+                  ${balance.toFixed(2)}
+                </div>
+              </div>
+              <div className="trans-sum mx-3 my-3">
+                <div>
+                  Withdrawal Amount
+                </div>
+                <div>
+                  -${parsedAmount.toFixed(2)}
+                </div>
+              </div>
+
+              <div className="trans-sum-line"></div>
+
+              <div className="trans-sum-total mx-3 my-3">
+                <div>
+                  Remaining Balance
+                </div>
+                <div>
+                  ${(balance - parsedAmount).toFixed(2)}
+                </div>
+              </div>
+
+              <div className="d-error-msg mt-3 mx-5">
+                <div>
+                  ㅤ
+                </div>
+                {error}
+              </div>
+
+
+              <div className="deposit-buttons mt-4 mx-5">
+                <button className="deposit-cancel" onClick={() => navigate('/home')}>Cancel</button>
+                <button className="deposit submit" onClick={handleSubmit}>Submit</button>
+              </div>
+            </div>
+
           </div>
-          <div>
-            ${balance.toFixed(2)}
-          </div>
-        </div>
-        <div className="trans-sum mx-3 my-3">
-          <div>
-            Withdrawal Amount
-          </div>
-          <div>
-            -${parsedAmount.toFixed(2)}
-          </div>
-        </div>
-
-        <div className="trans-sum-line"></div>
-
-        <div className="trans-sum-total mx-3 my-3">
-          <div>
-            Remaining Balance
-          </div>
-          <div>
-            ${(balance - parsedAmount).toFixed(2)}
-          </div>
-        </div>
+        </>)
+      }
 
 
-        <div className="deposit-buttons mt-5 mx-5">
-          <button className="deposit-cancel" onClick={() => navigate('/home')}>Cancel</button>
-          <button className="deposit submit" onClick={handleSubmit}>Submit</button>
-        </div>
-      </div>
 
       <div className="deposit-container3 mt-4">
         <div className="dc3-icon mx-3">

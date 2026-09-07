@@ -967,6 +967,10 @@ body {
   border-bottom: 0px;
 }
 
+.ft-ts-content-amount {
+  color: red;
+}
+
 .ft-buttons {
   display: flex;
   flex-direction: row;
@@ -1249,7 +1253,7 @@ body {
 
 .withdraw-container3 {
   width: calc(100% - 700px);
-  height: 300px;
+  height: 330px;
   background-color: var(--bg-secondary);
   margin-left: 250px;
   box-sizing: border-box;
