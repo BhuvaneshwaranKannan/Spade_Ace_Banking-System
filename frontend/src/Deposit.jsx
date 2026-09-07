@@ -65,8 +65,9 @@ function Deposit() {
             })
             .catch(error => {
                 console.error("Deposit failed", error);
-                setError("Deposit failed");
-                // alert("Deposit failed");
+                setError("Deposit failed! Login the app to continue.");
+                alert("Session Expired. Login again!!");
+                navigate('/');
             });
     };
 
