@@ -19,7 +19,7 @@ function Deposit() {
     const [methodBox1, setMethodBox1] = useState(false);
     const [methodBox2, setMethodBox2] = useState(false);
 
-    const [ds, setDs] = useState(false);
+    const [ds, setDs] = useState("");
     const [error, setError] = useState("");
 
     useEffect(() => {
@@ -49,7 +49,8 @@ function Deposit() {
         const depositAmount = parseInt(amount);
         if (isNaN(depositAmount) || depositAmount <= 0) {
             // alert("Please enter a valid amount");
-            setError("!! Please enter a valid amount !!");
+            setError("Invalid deposit amount.");
+            setDs("d-unsuccess");
             return;
         }
 
@@ -61,7 +62,7 @@ function Deposit() {
                 setBalance(response.data.balance);
                 setDepositedAmount(depositAmount);
                 setAmount("");
-                setDs(true);
+                setDs("d-success");
             })
             .catch(error => {
                 console.error("Deposit failed", error);
@@ -89,12 +90,12 @@ function Deposit() {
             </div>
 
             {
-                ds ? (<>
+                ds === "d-success" ? (<>
 
                     <div className='locator'>
                         <span className='go-back mx-1' onClick={() => navigate('/home')}>Home</span>
                         <span className='mx-1'><i className="bi bi-chevron-right"></i></span>
-                        <span className='go-back mx-1' onClick={() => setDs(false)}>Deposit</span>
+                        <span className='go-back mx-1' onClick={() => {setDs(false); setMethodBox1(false); setMethodBox2(false);setAmount()}}>Deposit</span>
                         <span className='mx-1'><i className="bi bi-chevron-right"></i></span>
                         <span className='on-loc-final mx-1'>Deposit Successfull</span>
 
@@ -154,6 +155,80 @@ function Deposit() {
                         </div>
                     </div>
 
+                </>) : ds === "d-unsuccess" ? (<>
+                    <div className='locator'>
+                        <span className='go-back mx-1' onClick={() => navigate('/home')}>Home</span>
+                        <span className='mx-1'><i className="bi bi-chevron-right"></i></span>
+                        <span className='go-back mx-1' onClick={() => setDs(false)}>Deposit</span>
+                        <span className='mx-1'><i className="bi bi-chevron-right"></i></span>
+                        <span className='on-loc mx-1'>Deposit UnSuccessfull</span>
+
+                        <div className="d-title">
+                            <div>
+                                <div className="deposit-title mt-2">
+                                    Deposit Money
+                                </div>
+                                <div className="deposit-title-sub">
+                                    Add Money to your Bank Account
+                                </div>
+                            </div>
+                            <div className='d-title-icon mx-5'>
+                                <img src={dWallet} alt="" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="ft-container1 d-s mt-4">
+                        <div className='ft-ts-headerCont'>
+
+                            <div className='ft-ts-d-us-icon'>
+                                <i class="bi bi-x-circle"></i>
+                            </div>
+
+                            <div className='ft-ts-header'>
+                                Deposit Falied
+                            </div>
+
+                            <div className='ft-ts-content'>
+                                We could not process your deposit request at this time
+                            </div>
+
+                        </div>
+
+                        <div className="ft-ts-divider my-3"></div>
+
+                        <div className="d-unsuccess ">
+                            <div className="d-uns-reason-icon mx-3">
+                                <i class="bi bi-exclamation-circle"></i>
+                            </div>
+
+                            <div className="d-uns-reason">
+                                <div className="d-un-r">
+                                    Reason
+                                </div>
+                                <div className="d-un-r-content">
+                                    {error}
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div className='d-uns-suggestion mt-2'>
+                            Please enter a valid amount greater than $0.
+                        </div>
+
+
+                        <div className="ft-buttons mx-5 mt-4">
+                            <button className="ft-b-items" onClick={() => { setDs(""); setError(""); setAmount(); setMethodBox1(false); setMethodBox2(false); }}>
+                                <i className="bi bi-chevron-left" />
+                                <span>Try Again</span>
+                            </button>
+                            <button className="ft-b-items" onClick={() => { navigate('/home') }}>
+                                <i class="bi bi-house-door-fill"></i>
+                                <span>Back to Home</span>
+                            </button>
+                        </div>
+                    </div>
                 </>) : (<>
                     <div className='locator'>
                         <span className='go-back mx-1' onClick={() => navigate('/home')}>Home</span>
@@ -338,11 +413,11 @@ function Deposit() {
                             <div className="deposit-buttons mt-4 mx-5">
                                 <button onClick={() => navigate('/home')}>Cancel</button>
                                 {
-                                    methodBox1 || methodBox2 ? (<>
+                                    (methodBox1 || methodBox2) ? (<>
                                         <button onClick={handleSubmit}>Submit</button>
                                     </>) : (<>
-                                        <button onClick={() => setError("!! Select any method to proceed !!")}>Submit</button>
-                                    </>)
+                                        <button onClick={() => setError("Select any method to proceed !!")}>Submit</button>
+                                    </>) 
                                 }
 
                             </div>

@@ -864,6 +864,45 @@ body {
   align-items: center;
 }
 
+.d-unsuccess {
+  width: 400px;
+  height: 100px;
+  border: 3px solid #2a2a2a;
+  margin: 0 auto;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: center; */
+
+  gap: 2%;
+}
+
+.d-uns-reason-icon {
+  font-size: 3rem;
+  color: red;
+  font-weight: 800;
+}
+
+.d-uns-reason {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+.d-un-r {
+  color: red;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.d-un-r-content{
+  color: grey;
+  font-size: large;
+}
+
 .d-s-ub {
   font-size: larger;
   color: grey;
@@ -1013,8 +1052,9 @@ body {
 .ft-b-items {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  gap: 5%;
 }
 
 .ft-buttons button:hover {
@@ -1221,6 +1261,11 @@ body {
   color: green;
 }
 
+.ft-ts-d-us-icon {
+  font-size: 8rem;
+  color: red;
+}
+
 .ft-ts-headerCont {
   display: flex;
   flex-direction: column;
@@ -1235,6 +1280,11 @@ body {
 
 .ft-ts-content {
   color: grey;
+}
+
+.d-uns-suggestion {
+  display: flex;
+  justify-content: center;
 }
 
 .dc3-content {
