@@ -879,6 +879,14 @@ body {
   gap: 2%;
 }
 
+.w-unsuccess {
+  width: 400px;
+  height: 100px;
+  border: 3px solid #2a2a2a;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
 .d-uns-reason-icon {
   font-size: 3rem;
   color: red;
@@ -901,6 +909,20 @@ body {
 .d-un-r-content{
   color: grey;
   font-size: large;
+}
+
+.w-uns-table-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10%;
+
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.w-uns-t-last {
+  border-bottom: 0px;
 }
 
 .d-s-ub {

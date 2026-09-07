@@ -15,7 +15,7 @@ function Withdraw() {
   const [amount, setAmount] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [ws, setWs] = useState(false);
+  const [ws, setWs] = useState("");
 
   const [withdrawedAmount, setWithdrawedAmount] = useState(0);
   const [error, setError] = useState("");
@@ -47,12 +47,13 @@ function Withdraw() {
     const withdrawAmount = parseInt(amount);
     if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
       // alert("Please enter a valid amount");
-      setError("!! Please enter a valid amount !!");
+      setError("Please enter a valid amount !!");
       return;
     }
     if (withdrawAmount > balance) {
       // alert("Insufficient balance");
-      setError("!! Insufficient balance !!");
+      setError("Insufficient balance !!");
+      setWs("w-unsuccess");
       return;
     }
 
@@ -63,7 +64,7 @@ function Withdraw() {
         setBalance(response.data.balance);
         setAmount("");
         setWithdrawedAmount(withdrawAmount);
-        setWs(true);
+        setWs("w-success");
       })
       .catch(error => {
         console.error("Withdrawal failed", error);
@@ -93,7 +94,7 @@ function Withdraw() {
       </div>
 
       {
-        ws ? (<>
+        ws === "w-success" ? (<>
           <div className='locator'>
             <span className='go-back mx-1' onClick={() => navigate('/home')}>Home</span>
             <span className='mx-1'><i className="bi bi-chevron-right"></i></span>
@@ -149,6 +150,87 @@ function Withdraw() {
               <button className="ft-b-items" onClick={() => { }}>
                 <i class="bi bi-file-earmark-ruled"></i>
                 <span>View Transaction </span>
+              </button>
+              <button className="ft-b-items" onClick={() => { navigate('/home') }}>
+                <i class="bi bi-house-door-fill"></i>
+                <span>Back to Home</span>
+              </button>
+            </div>
+          </div>
+        </>) : ws === "w-unsuccess" ? (<>
+          <div className='locator'>
+            <span className='go-back mx-1' onClick={() => navigate('/home')}>Home</span>
+            <span className='mx-1'><i className="bi bi-chevron-right"></i></span>
+            <span className='go-back mx-1' onClick={() => setWs(false)}>Withdraw</span>
+            <span className='mx-1'><i className="bi bi-chevron-right"></i></span>
+            <span className='on-loc mx-1'>Withdraw Failed</span>
+
+            <div className="w-title">
+              <div>
+                <div className="deposit-title mt-2">
+                  Withdraw Money
+                </div>
+                <div className="deposit-title-sub">
+                  Withdraw Money to your Bank Account
+                </div>
+              </div>
+              <div className='d-title-icon mx-5'>
+                <img src={wWallet} alt="" />
+              </div>
+            </div>
+          </div>
+
+          <div className="ft-container1 d-s mt-4">
+            <div className='ft-ts-headerCont'>
+
+              <div className='ft-ts-d-us-icon'>
+                <i class="bi bi-x-circle"></i>
+              </div>
+
+              <div className='ft-ts-header'>
+                Withdrawal Falied
+              </div>
+
+              <div className='ft-ts-content'>
+                Insufficient account balance.
+              </div>
+
+            </div>
+
+            <div className="ft-ts-divider my-3"></div>
+
+            <div className="w-unsuccess">
+
+              <div className="d-uns-reason">
+                <div className="w-uns-table-items my-1">
+                  <div className='p-2 mx-2'>
+                    Requested Amount
+                  </div>
+                  <div className='p-2 mx-2'>
+                    ${amount}.00
+                  </div>
+                </div>
+                <div className="w-uns-table-items w-uns-t-last my-1">
+                  <div className='p-2 mx-2'>
+                    Available Balance
+                  </div>
+                  <div className='p-2 mx-2'>
+                    ${balance}.00
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div className='d-uns-suggestion mt-2'>
+              You do not have enough balance to complete this withdrawal.
+            </div>
+
+
+            <div className="ft-buttons mx-5 mt-4">
+              <button className="ft-b-items" onClick={() => { setWs(""); setError(""); setAmount();}}>
+                <i className="bi bi-chevron-left" />
+                <span>Try Again</span>
               </button>
               <button className="ft-b-items" onClick={() => { navigate('/home') }}>
                 <i class="bi bi-house-door-fill"></i>
@@ -237,7 +319,7 @@ function Withdraw() {
 
               <div className="quick-amount mx-5">
                 {[1, 100, 500, 1000, 5000, 10000].map(val => (
-                  <div key={val} className="quick-amount-box text-center" onClick={() => {setAmount(val.toString()); setError("");}} style={{ cursor: 'pointer' }}>
+                  <div key={val} className="quick-amount-box text-center" onClick={() => { setAmount(val.toString()); setError(""); }} style={{ cursor: 'pointer' }}>
                     <div className="my-2">${val}</div>
                   </div>
                 ))}
