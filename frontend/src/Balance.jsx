@@ -13,6 +13,8 @@ function Balance() {
     const [toggle, setToggle] = useState(true);
     const [loading, setLoading] = useState(false);
 
+    const [active, setActive] = useState(false);
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
@@ -21,6 +23,7 @@ function Balance() {
                 headers: { Authorization: `Bearer ${token}` }
             })
                 .then(response => {
+                    setActive(true);
                     setBalance(response.data.balance);
                     setTimeout(() => {
                         setLoading(false);
@@ -88,12 +91,21 @@ function Balance() {
                     </div>
 
                     <div className="bc1-c3">
-                        <div className="bc1-activeSymbol">
+                        <div className={active ? "bc1-activeSymbol" : "bc1-in-activeSymbol"}>
                             <i class="bi bi-dot"></i>
                         </div>
-                        <div className='bc1-active'>
-                            Active
-                        </div>
+                        {active ?
+                            (<>
+                                <div className='bc1-active'>
+                                    Active
+                                </div>
+                            </>) : (<>
+                                <div className='bc1-in-active'>
+                                    InActive
+                                </div>
+                            </>)
+                        }
+
                     </div>
 
                 </div>
@@ -111,7 +123,7 @@ function Balance() {
                                     <div className="balance-amount">
                                         $*****
                                     </div>
-                                    <div className="b-toggler" onClick={() => setToggle(false)}>
+                                    <div className= {active? "b-toggler" : "b-toggle-inactive"} onClick={() => setToggle(false)}>
                                         <div className="b-toggle-icon">
                                             <i class="bi bi-eye"></i>
                                         </div>

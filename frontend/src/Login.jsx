@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import { Atom } from 'react-loading-indicators';
-import ErrorPage from './ErrorPage.jsx'
 
 
 function Login() {
@@ -20,21 +19,25 @@ function Login() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [loading, setloading] = useState(false);
+  const [apiError, setApiError] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
     const identifier = id.trim().replace(/[\s-]/g, '').replace(/^\+91/, '');
     if (!/^\d+$/.test(identifier)) {
-      alert("User ID or phone number must contain numbers only.");
+      // alert("User ID or phone number must contain numbers only.");
+      setApiError("User ID or phone number must contain numbers only.");
       return;
     }
     if (captcha.trim().toUpperCase() !== "6X9B") {
-      alert("Enter the captcha exactly as shown.");
+      // alert("Enter the captcha exactly as shown.");
+      setApiError("Enter the captcha exactly as shown.");
       return;
     }
 
     setIsSubmitting(true);
     setloading(true);
+    
     axios.post("http://localhost:8080/auth/login", { id: identifier, password })
       .then(response => {
         localStorage.setItem("token", response.data.token);
@@ -47,13 +50,20 @@ function Login() {
         console.error("Login failed", error);
         setloading(false);
         // alert(error.response?.data || "Unable to log in. Check your User ID and password...");
-        <ErrorPage errormsg = "Unable to log in. Check your User ID and password..." />
-        navigate('/errorPage')
+        setApiError("Unable to log in. Check your User ID and password !!");
+        setId("");
+        setPassword("");
+        setCaptcha("");
+
       })
       .finally(() => {
         setIsSubmitting(false);
       });
   };
+
+  // if(apiError) {
+  //   return <ErrorPage errormsg = {apiError} />;
+  // }
 
   return (
     <>
@@ -81,7 +91,7 @@ function Login() {
 
                 <div className="mb-3">
                   <label htmlFor="userId" className="form-label fw-semibold form-label-custom">User ID / Phone Number</label>
-                  <input type="tel" inputMode="numeric" pattern="[0-9+\s-]+" className="form-control custom-input" id="userId" placeholder="Enter your User ID / Phone Number" value={id} onChange={(e) => setId(e.target.value)} required />
+                  <input type="tel" inputMode="numeric" pattern="[0-9+\s-]+" className="form-control custom-input" id="userId" placeholder="Enter your User ID / Phone Number" value={id} onChange={(e) => {setId(e.target.value); setApiError("")}} required />
                   <div className="text-end mt-1">
                     <a href="#" className="form-link">Unlock User ID?</a>
                   </div>
@@ -89,7 +99,7 @@ function Login() {
 
                 <div className="mb-3">
                   <label htmlFor="password" className="form-label fw-semibold form-label-custom">Password</label>
-                  <input type="password" className="form-control custom-input" id="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                  <input type="password" className="form-control custom-input" id="password" placeholder="••••••••" value={password} onChange={(e) => {setPassword(e.target.value);setApiError("")}} required />
                   <div className="text-end mt-1">
                     <a href="#" className="form-link">Forgot password?</a>
                   </div>
@@ -98,11 +108,15 @@ function Login() {
                 <div className="mb-3">
                   <label htmlFor="captcha" className="form-label fw-semibold form-label-custom">Enter Captcha</label>
                   <div className="d-flex gap-2 align-items-center">
-                    <input type="text" className="form-control custom-input" id="captcha" placeholder="Code" value={captcha} onChange={(e) => setCaptcha(e.target.value)} required />
+                    <input type="text" className="form-control custom-input" id="captcha" placeholder="Code" value={captcha} onChange={(e) => {setCaptcha(e.target.value);setApiError("")}} required />
                     <div className="captcha-box">
                       6X9B
                     </div>
                   </div>
+                </div>
+
+                <div className="login-err-msg my-3">
+                  {apiError}
                 </div>
 
                 <button

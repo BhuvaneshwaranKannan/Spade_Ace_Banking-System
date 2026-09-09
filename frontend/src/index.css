@@ -1414,6 +1414,16 @@ body {
   font-size: 3rem;
 }
 
+.bc1-in-activeSymbol i {
+  color: red;
+  font-size: 3rem;
+}
+
+.bc1-in-active {
+  color: red;
+  font-size: 1.5rem;
+}
+
 .show-balance {
   display: flex;
   flex-direction: row;
@@ -1441,6 +1451,22 @@ body {
   border-radius: 5px;
   color: black;
   cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.b-toggle-inactive {
+  width: 150px;
+  height: 40px;
+  /* background-color: #1f1f1f; */
+  border: 1px solid var(--accent-lighter);
+  border-radius: 5px;
+  color: black;
+  cursor: not-allowed;
 
   display: flex;
   flex-direction: row;
@@ -1772,7 +1798,18 @@ body {
 }
 
 .err-icon {
+  font-size: 2rem;
+}
+
+.err-msg {
   font-size: 1rem;
+}
+
+.login-err-msg {
+  color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .ft-form {

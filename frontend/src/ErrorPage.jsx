@@ -46,13 +46,14 @@ function ErrorPage(props) {
     //     }}
     //   />
 
-      <div className='errr'>
-        <div className='err-icon'>
+    <div className='errr'>
+      <div className='err-icon'>
         <SentimentVeryDissatisfiedOutlinedIcon />
-        
-        </div>
-        {props.errormsg}
       </div>
+      <div className="err-msg">
+      {props.errormsg}
+      </div>
+    </div>
   )
 }
 
